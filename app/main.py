@@ -11,17 +11,31 @@ from app.routing.risk_routing import (
     get_path_coordinates,
 )
 from fastapi.middleware.cors import CORSMiddleware
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 app = FastAPI()
 
+ENV = os.getenv("ENV", "development")
+CORS_SETTINGS = {
+    "development": ["http://localhost:5173"],
+    "production": ["https://safepath-ai-pi.vercel.app"],
+}
+
+allowed_origins = CORS_SETTINGS.get(ENV, [])
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["POST"],
+    allow_headers=["Content-Type"],
 )
+
+print("Current ENV:", ENV)
+print("Allowed origins:", allowed_origins)
 
 
 @app.get("/")
