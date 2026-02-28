@@ -34,9 +34,6 @@ app.add_middleware(
     allow_headers=["Content-Type"],
 )
 
-print("Current ENV:", ENV)
-print("Allowed origins:", allowed_origins)
-
 
 @app.get("/")
 def root():
