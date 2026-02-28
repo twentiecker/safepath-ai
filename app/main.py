@@ -29,21 +29,25 @@ def root():
     return {"message": "SafePath AI is running 🚀"}
 
 
+G = create_graph()
+
+
 @app.post("/evacuate")
 def evacuate(start: str, end: str):
     move_hazard()
 
-    G = create_graph()
-    G = apply_risk_to_graph(G)
+    G_with_risk = apply_risk_to_graph(G)
 
-    shortest_path = find_shortest_path(G, start, end)
-    shortest_coords = get_path_coordinates(G, shortest_path)
-    shortest_total_risk, _ = calculate_total_risk(G, shortest_path)
+    shortest_path = find_shortest_path(G_with_risk, start, end)
+    shortest_coords = get_path_coordinates(G_with_risk, shortest_path)
+    shortest_total_risk, _ = calculate_total_risk(G_with_risk, shortest_path)
     shortest_risk_level = classify_total_risk(shortest_total_risk)
 
-    safest_path = find_safest_path(G, start, end)
-    safest_coords = get_path_coordinates(G, safest_path)
-    safest_total_risk, safest_risk_details = calculate_total_risk(G, safest_path)
+    safest_path = find_safest_path(G_with_risk, start, end)
+    safest_coords = get_path_coordinates(G_with_risk, safest_path)
+    safest_total_risk, safest_risk_details = calculate_total_risk(
+        G_with_risk, safest_path
+    )
     safest_risk_level = classify_total_risk(safest_total_risk)
 
     return {

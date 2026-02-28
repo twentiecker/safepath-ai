@@ -4,7 +4,12 @@ import math
 from app.model.predict import predict_risk
 
 RISK_MULTIPLIER = {"LOW": 1, "MEDIUM": 5, "HIGH": 20}
-HAZARD_ZONES = [{"lat": -6.205, "lng": 106.804, "radius": 0.002}]
+# HAZARD_ZONES = [{"lat": -6.205, "lng": 106.804, "radius": 0.002}]
+HAZARD_ZONES = [
+    {"lat": -6.205, "lng": 106.804, "radius": 0.002},
+    {"lat": -6.210, "lng": 106.808, "radius": 0.003},
+    {"lat": -6.198, "lng": 106.799, "radius": 0.0025},
+]
 
 
 def move_hazard():
